@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chat History</title>
+  <link rel="stylesheet" href="static/style-history.css" />
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+
+<body>
+  <div class="container">
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <h2>GenAI Chatbot</h2>
+      <ul class="sidebar-menu">
+        <li><button class="nav-btn" onclick="goToPage('/')">New Chat</button></li>
+        <li><button class="nav-btn" onclick="goToPage('/extensions')">Extensions</button></li>
+        <li><button class="nav-btn" onclick="goToPage('/history')">History</button></li>
+      </ul>
+
+      <ul class="sidebar-settings">
+        <li>Settings</li>
+      </ul>
+    </div>
+
+    <!-- Main History Interface -->
+    <div class="main">
+      <div class="chat-header">
+        <header>
+          <h1>Chatbot AI</h1>
+          <!-- <button id="toggle-dark">Dark Mode</button> -->
+        </header>
+      </div>
+
+      <div class="history-buttons">
+        <button class="history-button" onclick="toggleSection('chat')">Chat History</button>
+        <button class="history-button" onclick="toggleSection('extensions')">Extension's History</button>
+        <button class="history-button" onclick="toggleSection('archive')">Archive</button>
+      </div>
+
+      <!-- Chat History Section -->
+      <div id="chat" class="history-section">
+        <ul class="history-list">
+          <li>
+            <div class="history-row" onclick="toggleItem(this)">
+              <div>
+                <div class="history-topic">Python Shallow vs Deep Copy</div>
+                <div class="history-date">July 21, 2025</div>
+              </div>
+              <span class="arrow">▼</span>
+            </div>
+            <div class="history-details" style="display: none;">This chat explains the difference between shallow and
+              deep copying in Python with examples and use cases.</div>
+          </li>
+          <li>
+            <div class="history-row" onclick="toggleItem(this)">
+              <div>
+                <div class="history-topic">Transformers in ML</div>
+                <div class="history-date">July 24, 2025</div>
+              </div>
+              <span class="arrow">▼</span>
+            </div>
+            <div class="history-details" style="display: none;">An overview of transformer models in machine learning,
+              focusing on architecture, attention mechanism, and use in NLP.</div>
+          </li>
+          <li>
+            <div class="history-row" onclick="toggleItem(this)">
+              <div>
+                <div class="history-topic">How to build a chatbot with LangChain</div>
+                <div class="history-date">July 26, 2025</div>
+              </div>
+              <span class="arrow">▼</span>
+            </div>
+            <div class="history-details" style="display: none;">A guide on integrating LangChain with OpenAI models to
+              create a conversational AI assistant with memory and tools.</div>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Extensions History Section -->
+      <div id="extensions" class="history-section" style="display: none;">
+        <ul class="history-list">
+          <li>
+            <div class="history-row" onclick="toggleItem(this)">
+              <div>
+                <div class="history-topic">LangChain Extension Install</div>
+                <div class="history-date">July 20, 2025</div>
+              </div>
+              <span class="arrow">▼</span>
+            </div>
+            <div class="history-details" style="display: none;">Walkthrough of installing LangChain as a browser
+              extension and testing basic features.</div>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Archive Section -->
+      <div id="archive" class="history-section" style="display: none;">
+        <ul class="history-list">
+          <li>
+            <div class="history-row" onclick="toggleItem(this)">
+              <div>
+                <div class="history-topic">Archived Chat: Data Preprocessing</div>
+                <div class="history-date">June 18, 2025</div>
+              </div>
+              <span class="arrow">▼</span>
+            </div>
+            <div class="history-details" style="display: none;">Covers data cleaning, normalization, and encoding
+              methods used in typical ML workflows.</div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function toggleSection(sectionId) {
+      const sections = document.querySelectorAll('.history-section');
+      sections.forEach(section => section.style.display = 'none');
+      document.getElementById(sectionId).style.display = 'block';
+    }
+
+    function toggleItem(row) {
+      const details = row.nextElementSibling;
+      const arrow = row.querySelector('.arrow');
+      const isOpen = details.style.display === 'block';
+      details.style.display = isOpen ? 'none' : 'block';
+      arrow.textContent = isOpen ? '▼' : '▲';
+    }
+
+    function goToPage(route) {
+      window.location.href = route;
+    }
+  </script>
+</body>
+
+</html>
