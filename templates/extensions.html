@@ -3,7 +3,8 @@
 
 <head>
   <meta charset="UTF-8" />
-  <title>GenAI Chatbot</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CARL Extensions</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='style-extension.css') }}" />
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
@@ -12,6 +13,7 @@
   <div class="container">
     <!--Sidebar-->
     <div class="sidebar">
+      <button class="close-sidebar">✕</button>
       <h2>GenAI Chatbot</h2>
       <ul class="sidebar-menu">
         <li><button class="nav-btn" onclick="goToPage('/')">New Chat</button></li>
@@ -20,15 +22,16 @@
       </ul>
 
       <ul class="sidebar-settings">
-        <li>Settings</li>
+        <li><button class="nav-btn">Settings</button></li>
       </ul>
     </div>
 
     <!--Main Interface-->
     <div class="main">
       <div class="chat-header">
+        <button class="hamburger">☰</button>
         <header>
-          <h1>CARL</h1>
+          <h1>CARL AI</h1>
         </header>
       </div>
       <!--Chat Box-->
@@ -69,6 +72,13 @@
      function goToPage(route) {
       window.location.href = route;
     }
+    document.querySelector('.hamburger').addEventListener('click', () => {
+      document.querySelector('.sidebar').classList.toggle('active');
+    });
+
+    document.querySelector('.close-sidebar').addEventListener('click', () => {
+      document.querySelector('.sidebar').classList.remove('active');
+    });
   </script>
 </body>
 
