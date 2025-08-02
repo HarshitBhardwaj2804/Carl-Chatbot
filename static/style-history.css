@@ -8,15 +8,20 @@
 /* Base Styles */
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: #f4f6f8;
+  background: #f1f5f9;
   height: 100vh;
   display: flex;
   transition: background 0.3s, color 0.3s;
+  overflow-x: hidden;
+  /* Prevent horizontal scroll when sidebar is hidden */
 }
 
 .container {
   display: flex;
   width: 100%;
+  position: relative;
+  transition: transform 0.3s ease;
+  /* Smooth transition for sidebar toggle */
 }
 
 /* Sidebar */
@@ -27,6 +32,12 @@ body {
   padding: 20px;
   box-shadow: 3px 0 10px rgba(0, 0, 0, 0.05);
   border-right: 1px solid #e2e8f0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  transition: transform 0.3s ease;
+  z-index: 1000;
 }
 
 .sidebar h2 {
@@ -41,24 +52,20 @@ body {
   list-style: none;
 }
 
-.sidebar .sidebar-menu li{
+.sidebar .sidebar-menu li,
+.sidebar .sidebar-settings li {
   padding: 12px 10px 0 0;
   margin: 10px 0;
   background-color: #fafafa;
   border-radius: 30px;
   cursor: pointer;
   transition: background 0.3s, box-shadow 0.3s;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 13.05);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 1.13);
+  /* Fixed invalid box-shadow value */
 }
 
 .sidebar .sidebar-settings li {
-  padding: 12px 10px;
-  margin: 10px 0;
-  background-color: #fafafa;
-  border-radius: 30px;
-  cursor: pointer;
-  transition: background 0.3s, box-shadow 0.3s;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 13.05);
+  padding: 12px 10px 0 0;
 }
 
 .sidebar .sidebar-menu li:hover,
@@ -68,6 +75,7 @@ body {
 
 .sidebar .sidebar-settings li {
   margin-top: 402px;
+  /* Consider adjusting for mobile */
 }
 
 .nav-btn {
@@ -77,14 +85,23 @@ body {
   font: inherit;
   cursor: pointer;
   text-align: left;
-  padding: 0px 0px 13px 12px;
+  padding: 0 0 13px 12px;
   width: 100%;
 }
 
-/* .nav-btn:hover {
-  background-color: #3c3c55;
-} */
-
+/* Close button for mobile sidebar */
+.close-sidebar {
+  display: none;
+  /* Hidden on desktop */
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  color: #1e293b;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
 
 /* Main Chat Area */
 .main {
@@ -92,21 +109,27 @@ body {
   display: flex;
   flex-direction: column;
   background: #f1f5f9;
+  margin-left: 220px;
+  /* Matches sidebar width */
+  transition: margin-left 0.3s ease;
 }
 
-/*Header*/
+/* Header */
 .chat-header {
   padding: 20px 30px;
   background-color: #ffffff;
   border-bottom: 1px solid #838486;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .chat-header header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  width: 100%;
 }
 
 .chat-header h1 {
@@ -114,7 +137,6 @@ body {
   color: #1e293b;
   margin: 0 auto;
   font-weight: 600;
-
 }
 
 .chat-header button {
@@ -134,6 +156,17 @@ body {
   box-shadow: 0 6px 16px rgba(30, 64, 175, 0.35);
 }
 
+/* Hamburger menu for mobile */
+.hamburger {
+  display: none;
+  /* Hidden on desktop */
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #1e293b;
+}
+
 /* Chat History Section */
 .history-section {
   padding: 20px 30px;
@@ -142,7 +175,7 @@ body {
   flex: 1;
 }
 
-/* === History Buttons Container === */
+/* History Buttons Container */
 .history-buttons {
   display: flex;
   justify-content: space-between;
@@ -178,8 +211,7 @@ body {
   background-color: #2563eb;
 }
 
-
-/* === History Row (Optional Cleanup) === */
+/* History Row */
 .history-row {
   cursor: pointer;
   padding: 8px 12px;
@@ -187,10 +219,10 @@ body {
 }
 
 .history-row:hover {
-  background-color: #f3f4f6; /* Light gray hover */
+  background-color: #f3f4f6;
 }
 
-/* === History Details === */
+/* History Details */
 .history-details {
   padding: 10px 14px;
   background-color: #f9fafb;
@@ -198,10 +230,11 @@ body {
   border-left: 2px solid #3b82f6;
   margin-top: 6px;
   border-radius: 4px;
-  display: none; /* will be toggled via JS */
+  display: none;
+  /* Toggled via JS */
 }
 
-
+/* History List */
 .history-list {
   list-style: none;
 }
@@ -210,7 +243,7 @@ body {
   margin-bottom: 12px;
   background-color: #ffffff;
   border-radius: 8px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   padding: 15px 20px;
   transition: all 0.3s ease;
   cursor: pointer;
@@ -237,28 +270,48 @@ body {
   transition: transform 0.3s ease;
 }
 
-/* .history-topic {
-  font-weight: bold;
-  cursor: pointer;
-  position: relative;
-  padding-right: 20px; /* space for arrow 
-} */
-
 .arrow {
   position: absolute;
-  right: 0;
+  right: 18px;
   top: 50%;
   transform: translateY(-50%);
   transition: transform 0.3s ease;
-  margin:0 18px 0 0;
 }
-
 
 .history-date {
   font-size: 13px;
   color: #888888;
   margin-top: 5px;
 }
+
+/* Horizontal button container shown under each history item */
+.button-container {
+  display: none;
+  /* Hidden by default, toggled via JS */
+  margin: 8px 0 0 20px;
+  gap: 10px;
+  padding: 8px 0;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+.button-container button,
+.button-container a button {
+  padding: 8px 14px;
+  border: none;
+  background-color: #3b82f6;
+  color: white;
+  border-radius: 5px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.button-container button:hover,
+.button-container a button:hover {
+  background-color: #2563eb;
+}
+
 
 /* Expand/Collapse Animation */
 .history-item-expanded .arrow {
@@ -299,7 +352,7 @@ body {
 
 .archive-item:hover,
 .extension-item:hover {
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
 .archive-item h4,
@@ -316,4 +369,94 @@ body {
   margin: 0;
 }
 
+/* Responsive Design */
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
 
+  .sidebar {
+    transform: translateX(-100%);
+    /* Hidden off-screen */
+    width: 80%;
+    /* Reduced width for mobile */
+    z-index: 1001;
+  }
+
+  .sidebar.active {
+    transform: translateX(0);
+    /* Visible when toggled */
+  }
+
+  .close-sidebar {
+    display: block;
+    /* Show close button on mobile */
+  }
+
+  .main {
+    margin-left: 0;
+    /* No margin when sidebar is hidden */
+  }
+
+  .hamburger {
+    display: block;
+    /* Show hamburger menu on mobile */
+  }
+
+  .chat-header h1 {
+    font-size: 20px;
+    text-align: center;
+  }
+
+  .history-section {
+    padding: 15px;
+  }
+
+  .history-buttons {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .history-button {
+    margin: 0;
+    padding: 10px;
+    font-size: 13px;
+  }
+
+  .history-list li {
+    padding: 12px 15px;
+  }
+
+  .history-topic {
+    font-size: 14px;
+  }
+
+  .history-date {
+    font-size: 12px;
+  }
+
+  .history-item-content {
+    font-size: 13px;
+  }
+
+  .button-container {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 8px;
+    margin-left: 10px;
+  }
+
+  .button-container button,
+  .button-container a button {
+    flex: 1 1 auto;
+    min-width: 100px;
+    font-size: 13px;
+    padding: 8px 10px;
+    white-space: nowrap; /* Prevents button text from breaking into multiple lines */
+  }
+
+  .sidebar .sidebar-settings li {
+    margin-top: 20px;
+  }
+}
